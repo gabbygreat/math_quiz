@@ -11,12 +11,17 @@ class HomeScreen extends StatefulWidget {
 
 class HomeController extends State<HomeScreen> {
   Future<void> goToMath(Difficulty difficulty) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => PassyMathScreen(
-          difficulty: difficulty,
-        ),
-      ),
+    await LocalStorage.instance.getSpelling().then(
+      (value) {
+        return Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => PassyMathScreen(
+              difficulty: difficulty,
+              questions: value.map((e) => e!).toList(),
+            ),
+          ),
+        );
+      },
     );
   }
 

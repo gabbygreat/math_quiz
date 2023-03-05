@@ -31,7 +31,7 @@ class DifficultyButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
-            difficulty.name.toLowerCase(),
+            difficulty.name.capitalize(),
             style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 18,

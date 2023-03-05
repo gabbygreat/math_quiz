@@ -5,5 +5,6 @@ export '../models/models.dart';
 export '../riverpod/riverpod.dart';
 export '../services/services.dart';
 export 'global_variables.dart';
+export 'extension/string_extension.dart';
 export 'mvc/mvc.dart';
 export 'packages.dart';

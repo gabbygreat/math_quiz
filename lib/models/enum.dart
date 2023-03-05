@@ -1,3 +1,3 @@
 enum Difficulty { normal, hard }
 
-enum Option { a, b, c, d }
+enum Option { a, b, c, d, none }

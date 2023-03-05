@@ -10,6 +10,9 @@ class HomeView extends StatelessView<HomeScreen, HomeController> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          Expanded(
+            child: Image.asset('assets/images/image.png'),
+          ),
           DifficultyButton(
             controller: controller,
             difficulty: Difficulty.normal,

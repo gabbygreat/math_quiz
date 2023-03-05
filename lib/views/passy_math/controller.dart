@@ -6,22 +6,31 @@ part 'view.dart';
 
 class PassyMathScreen extends ConsumerStatefulWidget {
   final Difficulty difficulty;
-  const PassyMathScreen({Key? key, required this.difficulty}) : super(key: key);
+  final List<QuestionModel> questions;
+  const PassyMathScreen({
+    Key? key,
+    required this.difficulty,
+    required this.questions,
+  }) : super(key: key);
 
   @override
   ConsumerState<PassyMathScreen> createState() => PassyMathController();
 }
 
 class PassyMathController extends ConsumerState<PassyMathScreen> {
-  int maxTimePerQuestion = 9;
+  final maxTimePerQuestion = 9;
   final numberOfQuestion = 3;
   late int checkQuestionNumber;
   late Timer timer;
+  late List<bool?> colors;
 
   @override
   void initState() {
     super.initState();
     checkQuestionNumber = numberOfQuestion;
+    colors = List.generate(widget.questions.length, (index) => null);
+    widget.questions.shuffle();
+    GlobalVariables.chosen = false;
     timer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) => reduceTime(timer),
@@ -35,7 +44,7 @@ class PassyMathController extends ConsumerState<PassyMathScreen> {
   }
 
   void reduceTime(Timer timer) {
-    if (timer.tick <= maxTimePerQuestion / 1) {
+    if (timer.tick <= maxTimePerQuestion) {
       ref.read(timePerQuestionProvider.notifier).state += 1;
     } else {
       restartTimer();
@@ -46,6 +55,8 @@ class PassyMathController extends ConsumerState<PassyMathScreen> {
     timer.cancel();
     ref.read(timePerQuestionProvider.notifier).state = 0;
     checkQuestionNumber -= 1;
+    GlobalVariables.chosen = false;
+
     timer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) => reduceTime(timer),
@@ -55,10 +66,21 @@ class PassyMathController extends ConsumerState<PassyMathScreen> {
     }
   }
 
+  void changeIndicatorColor(
+      {required Option choice, required Option correct, required int index}) {
+    late bool color;
+    if (choice == correct) {
+      color = true;
+    } else {
+      color = false;
+    }
+    colors[index] = color;
+  }
+
   void endQuiz() {
     timer.cancel();
     ref.read(timePerQuestionProvider.notifier).state = 0;
-    print('Finished');
+    debugPrint('Finished');
   }
 
   Color counterColor() {

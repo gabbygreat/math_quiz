@@ -70,9 +70,12 @@ class PassyMathView
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Text(
-                          'Where are we',
-                          style: TextStyle(
+                        child: Text(
+                          widget
+                              .questions[controller.numberOfQuestion -
+                                  controller.checkQuestionNumber]
+                              .question,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
@@ -84,28 +87,72 @@ class PassyMathView
                 : const Center(),
           ),
           Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 3 / 2.4,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              shrinkWrap: true,
-              children: const [
-                OptionCard(),
-                OptionCard(),
-                OptionCard(),
-                OptionCard(),
-              ],
-            ),
+            child: controller.checkQuestionNumber == 0
+                ? const Center()
+                : GridView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    shrinkWrap: true,
+                    itemCount: 4,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 3 / 2.4,
+                    ),
+                    itemBuilder: (context, index) {
+                      late Option option;
+                      switch (index) {
+                        case 0:
+                          option = Option.a;
+                          break;
+                        case 1:
+                          option = Option.b;
+                          break;
+                        case 2:
+                          option = Option.c;
+                          break;
+                        case 3:
+                          option = Option.d;
+                          break;
+                        default:
+                          option = Option.none;
+                          break;
+                      }
+                      return OptionCard(
+                        time: time,
+                        maximum: controller.numberOfQuestion,
+                        index: controller.checkQuestionNumber,
+                        changeIndicatorColor: controller.changeIndicatorColor,
+                        option: option,
+                        correctOption: widget
+                            .questions[controller.numberOfQuestion -
+                                controller.checkQuestionNumber]
+                            .correctOption,
+                        text: widget
+                            .questions[controller.numberOfQuestion -
+                                controller.checkQuestionNumber]
+                            .options[index],
+                      );
+                    },
+                  ),
           ),
+         
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               for (int i = controller.numberOfQuestion; i > 0; i--)
                 CircleAvatar(
                   radius: controller.checkQuestionNumber == i ? 7 : 4,
-                  backgroundColor: Colors.grey,
+                  backgroundColor: controller.colors
+                              .elementAt(controller.numberOfQuestion - i) ==
+                          true
+                      ? Colors.green
+                      : controller.colors
+                                  .elementAt(controller.numberOfQuestion - i) ==
+                              false
+                          ? Colors.red
+                          : Colors.grey,
                 ),
             ],
           ),
