@@ -33,7 +33,7 @@ class QuestionModel {
     }
     return QuestionModel(
       correctOption: correct,
-      options: data['options'],
+      options: (data['options'] as List).map((e) => e.toString()).toList(),
       question: data['question'],
     );
   }

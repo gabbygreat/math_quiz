@@ -24,24 +24,6 @@ class LocalStorage {
       final colIns = await instance.collection;
       final questionBox = await colIns.openBox<Map>('math_question');
 
-      List<QuestionModel> questions = [
-        QuestionModel(
-          correctOption: Option.a,
-          options: ['80', '22', '120', '43'],
-          question: '100-20',
-        ),
-        QuestionModel(
-          correctOption: Option.b,
-          options: ['1', '2', '3', '4'],
-          question: 'What is the second',
-        ),
-        QuestionModel(
-          correctOption: Option.c,
-          options: ['1', '2', '3', '4'],
-          question: 'What is the thrid',
-        ),
-      ];
-
       await (await collection).transaction(
         () async {
           for (var i in questions) {
@@ -89,9 +71,11 @@ class LocalStorage {
     await questionBox.put('lastNumber', {'lastNumber': lastNumber});
   }
 
-  Future<int> getLastQuestionNumber() async {
+  Future<int?> getLastQuestionNumber() async {
     final colIns = await instance.collection;
     final questionBox = await colIns.openBox<Map>('math_question');
+    final a = await questionBox.get('lastNumber');
+    if (a == null) return null;
     return (await questionBox.get('lastNumber'))!['lastNumber'] as int;
   }
 
@@ -99,7 +83,8 @@ class LocalStorage {
     final colIns = await instance.collection;
     final questionBox = await colIns.openBox<Map>('math_question');
     List<QuestionModel?> questions = [];
-    final int last = await getLastQuestionNumber();
+    final int? last = await getLastQuestionNumber();
+    if (last == null) return [];
     for (int i = 1; i <= last; i++) {
       final question = await questionBox.get('$i');
       questions.add(QuestionModel.fromJson(question));

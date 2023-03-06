@@ -19,16 +19,16 @@ class PassyMathScreen extends ConsumerStatefulWidget {
 
 class PassyMathController extends ConsumerState<PassyMathScreen> {
   final maxTimePerQuestion = 9;
-  final numberOfQuestion = 3;
+  final numberOfQuestion = 10;
   late int checkQuestionNumber;
   late Timer timer;
-  late List<bool?> colors;
+  late List<bool?> answerColor;
 
   @override
   void initState() {
     super.initState();
     checkQuestionNumber = numberOfQuestion;
-    colors = List.generate(widget.questions.length, (index) => null);
+    answerColor = List.generate(widget.questions.length, (index) => null);
     widget.questions.shuffle();
     GlobalVariables.chosen = false;
     timer = Timer.periodic(
@@ -70,11 +70,12 @@ class PassyMathController extends ConsumerState<PassyMathScreen> {
       {required Option choice, required Option correct, required int index}) {
     late bool color;
     if (choice == correct) {
+      ref.read(scoreProvider.notifier).state += 10;
       color = true;
     } else {
       color = false;
     }
-    colors[index] = color;
+    answerColor[index] = color;
   }
 
   void endQuiz() {

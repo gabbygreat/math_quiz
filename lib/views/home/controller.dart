@@ -12,18 +12,19 @@ class HomeScreen extends StatefulWidget {
 class HomeController extends State<HomeScreen> {
   Future<void> goToMath(Difficulty difficulty) async {
     await LocalStorage.instance.getSpelling().then(
-      (value) {
+      (value) async {
         return Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => PassyMathScreen(
               difficulty: difficulty,
-              questions: value.map((e) => e!).toList(),
+              questions: value.map((e) => e!).toList().sublist(0, 11),
             ),
           ),
         );
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -21,6 +21,13 @@ class HomeView extends StatelessView<HomeScreen, HomeController> {
             controller: controller,
             difficulty: Difficulty.hard,
           ),
+          const Text(
+            'Inspired by passy',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );

@@ -7,4 +7,5 @@ export '../services/services.dart';
 export 'global_variables.dart';
 export 'extension/string_extension.dart';
 export 'mvc/mvc.dart';
+export 'functions/functions.dart';
 export 'packages.dart';

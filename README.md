@@ -25,7 +25,7 @@ the correct flow of data is represented in the list above
 ## Data Layer
 This would be properly documented when we have a full grasp of all the different ways the app interacts with data both locally and from the internet
 
-this consists of the models folder, some services that would be represented later like database and shared prefs, api requests, serialization and deserialization, etc
+this consists of the models folder, some services that would be represented later like database
 
 ## Domain Layer
 This is the connection between the data layer and presentation layer 
