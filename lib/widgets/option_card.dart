@@ -1,6 +1,6 @@
 import '../utils/utils.dart';
 
-class OptionCard extends StatefulWidget {
+class OptionCard extends ConsumerStatefulWidget {
   final String text;
   final Option option;
   final Option correctOption;
@@ -20,10 +20,10 @@ class OptionCard extends StatefulWidget {
   });
 
   @override
-  State<OptionCard> createState() => _OptionCardState();
+  ConsumerState<OptionCard> createState() => _OptionCardState();
 }
 
-class _OptionCardState extends State<OptionCard> {
+class _OptionCardState extends ConsumerState<OptionCard> {
   bool selected = false;
   void clicked() {
     if (!GlobalVariables.chosen) {
@@ -36,6 +36,7 @@ class _OptionCardState extends State<OptionCard> {
         index: widget.maximum - widget.index,
       );
     }
+    ref.read(correctOptionProvider.notifier).state = widget.correctOption;
   }
 
   void reset() {
@@ -47,6 +48,7 @@ class _OptionCardState extends State<OptionCard> {
   @override
   Widget build(BuildContext context) {
     reset();
+    final correctOption = ref.watch(correctOptionProvider);
     return InkWell(
       borderRadius: BorderRadius.circular(10),
       onTap: () => clicked(),
@@ -62,7 +64,9 @@ class _OptionCardState extends State<OptionCard> {
               ? widget.correctOption == widget.option
                   ? Colors.green
                   : Colors.red
-              : Colors.transparent,
+              : correctOption == widget.option
+                  ? Colors.green
+                  : Colors.transparent,
         ),
         child: Text(
           widget.text,

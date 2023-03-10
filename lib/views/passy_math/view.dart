@@ -54,7 +54,7 @@ class PassyMathView
               ),
             ),
           if (controller.timer.isActive)
-          Expanded(
+            Expanded(
               child: Column(
                 children: [
                   SizedBox(
@@ -179,74 +179,73 @@ class PassyMathView
               ),
             ),
           if (controller.timer.isActive)
-          Expanded(
+            Expanded(
               child: GridView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    shrinkWrap: true,
-                    itemCount: 4,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 3 / 2.4,
-                    ),
-                    itemBuilder: (context, index) {
-                      late Option option;
-                      switch (index) {
-                        case 0:
-                          option = Option.a;
-                          break;
-                        case 1:
-                          option = Option.b;
-                          break;
-                        case 2:
-                          option = Option.c;
-                          break;
-                        case 3:
-                          option = Option.d;
-                          break;
-                        default:
-                          option = Option.none;
-                          break;
-                      }
-                      return OptionCard(
-                        time: time,
-                        maximum: controller.numberOfQuestion,
-                        index: controller.checkQuestionNumber,
-                        changeIndicatorColor: controller.changeIndicatorColor,
-                        option: option,
-                        correctOption: widget
-                            .questions[controller.numberOfQuestion -
-                                controller.checkQuestionNumber]
-                            .correctOption,
-                        text: widget
-                            .questions[controller.numberOfQuestion -
-                                controller.checkQuestionNumber]
-                            .options[index],
-                      );
-                    },
-                  ),
-          ),
-          if (controller.timer.isActive)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              for (int i = controller.numberOfQuestion; i > 0; i--)
-                CircleAvatar(
-                  radius: controller.checkQuestionNumber == i ? 7 : 4,
-                    backgroundColor: controller.answerColor
-                              .elementAt(controller.numberOfQuestion - i) ==
-                          true
-                      ? Colors.green
-                        : controller.answerColor
-                                  .elementAt(controller.numberOfQuestion - i) ==
-                              false
-                          ? Colors.red
-                          : Colors.grey,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                shrinkWrap: true,
+                itemCount: 4,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 3 / 2.4,
                 ),
-            ],
-          ),
+                itemBuilder: (context, index) {
+                  late Option option;
+                  switch (index) {
+                    case 0:
+                      option = Option.a;
+                      break;
+                    case 1:
+                      option = Option.b;
+                      break;
+                    case 2:
+                      option = Option.c;
+                      break;
+                    case 3:
+                      option = Option.d;
+                      break;
+                    default:
+                      option = Option.none;
+                      break;
+                  }
+                  return OptionCard(
+                    time: time,
+                    maximum: controller.numberOfQuestion,
+                    index: controller.checkQuestionNumber,
+                    changeIndicatorColor: controller.changeIndicatorColor,
+                    option: option,
+                    correctOption: widget
+                        .questions[controller.numberOfQuestion -
+                            controller.checkQuestionNumber]
+                        .correctOption,
+                    text: widget
+                        .questions[controller.numberOfQuestion -
+                            controller.checkQuestionNumber]
+                        .options[index],
+                  );
+                },
+              ),
+            ),
+          if (controller.timer.isActive)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                for (int i = controller.numberOfQuestion; i > 0; i--)
+                  CircleAvatar(
+                    radius: controller.checkQuestionNumber == i ? 7 : 4,
+                    backgroundColor: controller.answerColor
+                                .elementAt(controller.numberOfQuestion - i) ==
+                            true
+                        ? Colors.green
+                        : controller.answerColor.elementAt(
+                                    controller.numberOfQuestion - i) ==
+                                false
+                            ? Colors.red
+                            : Colors.grey,
+                  ),
+              ],
+            ),
           const SizedBox(
             height: 20,
           ),

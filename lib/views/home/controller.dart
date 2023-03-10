@@ -17,7 +17,7 @@ class HomeController extends State<HomeScreen> {
           MaterialPageRoute(
             builder: (context) => PassyMathScreen(
               difficulty: difficulty,
-              questions: value.map((e) => e!).toList().sublist(0, 11),
+              questions: value.map((e) => e!).toList().sublist(0, 10),
             ),
           ),
         );

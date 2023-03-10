@@ -28,7 +28,8 @@ class PassyMathController extends ConsumerState<PassyMathScreen> {
   void initState() {
     super.initState();
     checkQuestionNumber = numberOfQuestion;
-    answerColor = List.generate(widget.questions.length, (index) => null);
+    answerColor = List.generate(widget.questions.length, (index) => null,
+        growable: false);
     widget.questions.shuffle();
     GlobalVariables.chosen = false;
     timer = Timer.periodic(
@@ -54,6 +55,7 @@ class PassyMathController extends ConsumerState<PassyMathScreen> {
   void restartTimer() {
     timer.cancel();
     ref.read(timePerQuestionProvider.notifier).state = 0;
+    ref.read(correctOptionProvider.notifier).state = Option.none;
     checkQuestionNumber -= 1;
     GlobalVariables.chosen = false;
 
@@ -81,7 +83,6 @@ class PassyMathController extends ConsumerState<PassyMathScreen> {
   void endQuiz() {
     timer.cancel();
     ref.read(timePerQuestionProvider.notifier).state = 0;
-    debugPrint('Finished');
   }
 
   Color counterColor() {
